@@ -9,6 +9,19 @@ const getEmployees = async (req, res) => {
    }
 }
 
+const deleteEmployee = async (req, res) => {
+   const employeeId = req.params.id
+
+   try {
+      const result = await db.query(
+         'DELETE FROM employees WHERE id = $1 RETURNING *;',
+         [employeeId]
+      )
+      res.status(200).json(result.rows[0])
+   } catch (e) {}
+}
+
 module.exports = {
    getEmployees,
+   deleteEmployee,
 }

@@ -6,23 +6,20 @@
          </div>
       </div>
 
-      <div class="table-inner">
+      <div class="table-inner" v-if="tableData && tableData.length > 0">
          <table-row
-            id="1"
-            name="Сергей"
-            surname="Иванов"
-            :materialCount="5"
-            :totalPrice="190000"
+            v-for="row in tableData"
+            :key="String(row.id)"
+            :id="String(row.id)"
+            :name="row.name"
+            :surname="row.surname"
+            :itemCount="row.itemCount"
+            :totalPrice="row.totalPrice"
             @on-delete="onDelete"
          />
-         <table-row
-            id="2"
-            name="Сергей"
-            surname="Иванов"
-            :materialCount="5"
-            :totalPrice="190000"
-            @on-delete="onDelete"
-         />
+      </div>
+      <div class="message" v-else>
+         <span>В ващей таблице пока нету сотрудников.</span>
       </div>
 
       <teleport to="body">
@@ -38,6 +35,7 @@
 <script>
 import TableRow from './TableRow.vue'
 import ConfirmationModal from './ConfirmationModal.vue'
+import { constructTableData } from '../utils'
 
 export default {
    components: { TableRow, ConfirmationModal },
@@ -63,9 +61,18 @@ export default {
          this.deletingEmployeeId = null
       },
       deleteEmployee() {
-         console.log('Deleting: ', this.deletingEmployeeId)
+         this.$store.dispatch('deleteEmployee', this.deletingEmployeeId)
          this.isModalOpen = false
       },
+   },
+   computed: {
+      tableData() {
+         return this.$store.getters.tableData
+      },
+   },
+   async created() {
+      await this.$store.dispatch('getEmployees')
+      await this.$store.dispatch('getMaterialItems')
    },
 }
 </script>
@@ -102,5 +109,20 @@ export default {
 .table-inner {
    display: flex;
    flex-direction: column;
+}
+
+.message {
+   width: 100%;
+   padding: 20px 15px;
+
+   display: flex;
+   align-self: center;
+   justify-content: center;
+
+   span {
+      font-size: 14px;
+      line-height: 21px;
+      color: #333;
+   }
 }
 </style>

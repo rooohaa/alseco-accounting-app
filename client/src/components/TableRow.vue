@@ -2,7 +2,7 @@
    <div class="table-row" @contextmenu="handler($event)">
       <div class="item">{{ id }}</div>
       <div class="item">{{ fullName }}</div>
-      <div class="item">{{ materialCount }}</div>
+      <div class="item">{{ itemCount }}</div>
       <div class="item">{{ totalPrice }}</div>
 
       <div v-show="isMenuOpen" class="context-menu">
@@ -26,7 +26,7 @@ export default {
          type: String,
          required: true,
       },
-      materialCount: {
+      itemCount: {
          type: Number,
          required: true,
       },
