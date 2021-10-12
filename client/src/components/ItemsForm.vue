@@ -23,6 +23,7 @@
 <script>
 import AppButton from '../ui/AppButton.vue'
 import AppInput from '../ui/AppInput.vue'
+
 export default {
    components: { AppInput, AppButton },
    data() {

@@ -67,6 +67,8 @@ button {
 .main {
    width: 78%;
    height: 100%;
+
+   overflow-y: auto;
 }
 
 .overlay {

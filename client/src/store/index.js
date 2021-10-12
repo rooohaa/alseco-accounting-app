@@ -18,8 +18,14 @@ export default createStore({
             (emp) => emp.id !== payload.id
          )
       },
+      removeItem(state, payload) {
+         state.items = state.items.filter((el) => el.id !== payload.id)
+      },
       addEmployee(state, payload) {
          state.employees.push(payload)
+      },
+      addItem(state, payload) {
+         state.items.push(payload)
       },
       setItems(state, payload) {
          state.items = payload
@@ -78,6 +84,35 @@ export default createStore({
 
             context.commit('addEmployee', data.employee)
             context.commit('mergeItems', data.items)
+         } catch (error) {}
+      },
+      async addNewItem(context, payload) {
+         try {
+            const res = await fetch('http://localhost:8000/api/items', {
+               method: 'POST',
+               body: JSON.stringify(payload),
+               headers: {
+                  'Content-type': 'application/json',
+               },
+            })
+
+            const data = await res.json()
+
+            context.commit('addItem', data)
+         } catch (error) {}
+      },
+      async deleteItem(context, payload) {
+         try {
+            const res = await fetch(
+               `http://localhost:8000/api/items/${payload}`,
+               {
+                  method: 'DELETE',
+               }
+            )
+
+            const data = await res.json()
+
+            context.commit('removeItem', data)
          } catch (error) {}
       },
    },
