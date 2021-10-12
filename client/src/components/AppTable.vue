@@ -45,7 +45,7 @@ export default {
             { id: '1', text: 'ID' },
             { id: '2', text: 'ФИО' },
             { id: '3', text: 'Кол-во МЦ' },
-            { id: '4', text: 'Общая стоимость' },
+            { id: '4', text: 'Общая стоимость (тг)' },
          ],
          isModalOpen: false,
          deletingEmployeeId: null,

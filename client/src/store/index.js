@@ -11,13 +11,19 @@ export default createStore({
       setEmployees(state, payload) {
          state.employees = payload
       },
-      setItems(state, payload) {
-         state.items = payload
-      },
       removeEmployee(state, payload) {
          state.employees = state.employees.filter(
             (emp) => emp.id !== payload.id
          )
+      },
+      addEmployee(state, payload) {
+         state.employees.push(payload)
+      },
+      setItems(state, payload) {
+         state.items = payload
+      },
+      mergeItems(state, payload) {
+         state.items = [...state.items, ...payload]
       },
       setSortValue(state, payload) {
          state.sortByValue = payload
@@ -56,6 +62,21 @@ export default createStore({
             context.commit('removeEmployee', data)
          } catch (error) {}
       },
+      async postNewEmployee(context, payload) {
+         try {
+            const res = await fetch('http://localhost:8000/api/employees', {
+               method: 'POST',
+               body: JSON.stringify(payload),
+               headers: {
+                  'Content-type': 'application/json',
+               },
+            })``
+            const data = await res.json()
+
+            context.commit('addEmployee', data.employee)
+            context.commit('mergeItems', data.items)
+         } catch (error) {}
+      },
    },
    getters: {
       tableData(state) {
@@ -63,9 +84,9 @@ export default createStore({
 
          switch (state.sortByValue) {
             case 'itemCount':
-               return tableData.sort((a, b) => a.itemCount - b.itemCount)
+               return tableData.sort((a, b) => b.itemCount - a.itemCount)
             case 'totalPrice':
-               return tableData.sort((a, b) => a.totalPrice - b.totalPrice)
+               return tableData.sort((a, b) => b.totalPrice - a.totalPrice)
             case 'fullName':
                tableData.sort((a, b) => a.surname.localeCompare(b.surname))
             default:

@@ -108,8 +108,7 @@ export default {
             items: this.items,
          }
 
-         console.log(data)
-
+         this.$store.dispatch('postNewEmployee', data)
          this.closeModal()
       },
       toggleItemsForm() {
