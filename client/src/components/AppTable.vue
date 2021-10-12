@@ -70,9 +70,9 @@ export default {
          return this.$store.getters.tableData
       },
    },
-   async created() {
-      await this.$store.dispatch('getEmployees')
-      await this.$store.dispatch('getMaterialItems')
+   created() {
+      this.$store.dispatch('getEmployees')
+      this.$store.dispatch('getMaterialItems')
    },
 }
 </script>

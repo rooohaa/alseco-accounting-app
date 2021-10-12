@@ -7,10 +7,10 @@ CREATE TABLE employees (
 );
 
 CREATE TABLE material_items (
-   id SERIAL PRIMARY KEY,
-   title VARCHAR(100) NOT NULL,
-   price INT NOT NULL,
-   employee_id INT NOT NULL REFERENCES employees(id) ON DELETE CASCADE
+   id SERIAL PRIMARY KEY, 
+   title VARCHAR(100) NOT NULL, 
+   price INT NOT NULL, 
+   employee_id INT NOT NULL REFERENCES employees(id) ON DELETE CASCADE 
 );
 
 INSERT INTO employees (name, surname) VALUES ('Рахат', 'Алпысбай');

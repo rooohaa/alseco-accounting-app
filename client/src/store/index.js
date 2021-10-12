@@ -5,6 +5,7 @@ export default createStore({
    state: {
       employees: [],
       items: [],
+      sortByValue: '',
    },
    mutations: {
       setEmployees(state, payload) {
@@ -17,6 +18,9 @@ export default createStore({
          state.employees = state.employees.filter(
             (emp) => emp.id !== payload.id
          )
+      },
+      setSortValue(state, payload) {
+         state.sortByValue = payload
       },
    },
    actions: {
@@ -55,7 +59,18 @@ export default createStore({
    },
    getters: {
       tableData(state) {
-         return constructTableData(state.employees, state.items)
+         let tableData = constructTableData(state.employees, state.items)
+
+         switch (state.sortByValue) {
+            case 'itemCount':
+               return tableData.sort((a, b) => a.itemCount - b.itemCount)
+            case 'totalPrice':
+               return tableData.sort((a, b) => a.totalPrice - b.totalPrice)
+            case 'fullName':
+               tableData.sort((a, b) => a.surname.localeCompare(b.surname))
+            default:
+               return tableData
+         }
       },
    },
 })
