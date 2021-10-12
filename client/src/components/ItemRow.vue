@@ -5,7 +5,7 @@
       <div class="item">{{ price }}</div>
 
       <div class="actions">
-         <button @click="editRow">
+         <button @click="editRow({ id, name, price })">
             <img src="../assets/pencil-alt-solid.svg" alt="Edit icon icon" />
          </button>
          <button @click="deleteRow(id)">
@@ -40,6 +40,9 @@ export default {
          if (isDeleting) {
             this.$store.dispatch('deleteItem', id)
          }
+      },
+      editRow(item) {
+         this.$emit('on-edit', item)
       },
    },
 }

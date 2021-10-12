@@ -49,7 +49,6 @@ export default {
    },
    methods: {
       onEmployeeAdd() {
-         console.log('adding emp')
          this.isModalOpen = true
       },
       closeFormModal() {

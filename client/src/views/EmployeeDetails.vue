@@ -21,7 +21,13 @@
                <h3>Форма добавления МЦ</h3>
 
                <div class="form-card">
-                  <items-form @on-add="onItemAdd" />
+                  <items-form
+                     @on-add="onItemAdd"
+                     @on-update="onItemUpdate"
+                     :defaultName="edittingItem.name"
+                     :defaultPrice="edittingItem.price"
+                     :mode="formMode"
+                  />
                </div>
             </div>
          </div>
@@ -29,6 +35,7 @@
          <items-table
             v-if="employeeItems && employeeItems.length > 0"
             :items="employeeItems"
+            @on-edit="editItem"
          />
       </div>
    </section>
@@ -42,7 +49,21 @@ import { getEmployeeItemsData } from '../utils'
 
 export default {
    components: { InfoCard, ItemsForm, ItemsTable },
+   data() {
+      return {
+         edittingItem: {
+            id: '',
+            name: '',
+            price: '',
+         },
+         formMode: 'add',
+      }
+   },
    methods: {
+      editItem(item) {
+         this.edittingItem = item
+         this.formMode = 'update'
+      },
       navigateBack() {
          this.$router.go(-1)
       },
@@ -56,6 +77,11 @@ export default {
          }
 
          this.$store.dispatch('addNewItem', data)
+      },
+      onItemUpdate(edittedItem) {
+         console.log('Editting', edittedItem)
+
+         this.formMode = 'add'
       },
    },
    computed: {

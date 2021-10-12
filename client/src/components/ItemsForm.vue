@@ -16,7 +16,7 @@
          placeHolder="Стоимость МЦ"
       />
 
-      <app-button text="Добавить МЦ" variant="sm" :onClick="submitForm" />
+      <app-button :text="btnText" variant="sm" :onClick="submitForm" />
    </div>
 </template>
 
@@ -26,6 +26,20 @@ import AppInput from '../ui/AppInput.vue'
 
 export default {
    components: { AppInput, AppButton },
+   props: {
+      defaultName: {
+         type: String,
+         required: false,
+      },
+      defaultPrice: {
+         type: [Number, String],
+         required: false,
+      },
+      mode: {
+         type: String,
+         required: false,
+      },
+   },
    data() {
       return {
          itemName: '',
@@ -52,12 +66,36 @@ export default {
             price: +this.itemPrice,
          }
 
-         this.$emit('on-add', item)
+         if (this.mode === 'add') {
+            this.$emit('on-add', item)
+         } else {
+            this.$emit('on-update', item)
+         }
+
          this.resetForm()
       },
       resetForm() {
          this.itemName = ''
          this.itemPrice = ''
+      },
+   },
+   computed: {
+      btnText() {
+         return this.mode === 'add' ? 'Добавить МЦ' : 'Редактировать'
+      },
+   },
+   watch: {
+      defaultName: {
+         immediate: true,
+         handler(newValue, oldValue) {
+            this.itemName = newValue
+         },
+      },
+      defaultPrice: {
+         immediate: true,
+         handler(newValue, oldValue) {
+            this.itemPrice = newValue + ''
+         },
       },
    },
 }

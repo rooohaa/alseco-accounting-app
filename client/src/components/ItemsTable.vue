@@ -12,6 +12,7 @@
             :id="item.id"
             :name="item.title"
             :price="item.price"
+            @on-edit="handleEdit"
          />
       </div>
    </div>
@@ -37,6 +38,11 @@ export default {
             { id: '4', name: 'Тип действия' },
          ],
       }
+   },
+   methods: {
+      handleEdit(edittingItem) {
+         this.$emit('on-edit', edittingItem)
+      },
    },
 }
 </script>
