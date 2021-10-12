@@ -1,5 +1,10 @@
 <template>
-   <button class="app-btn" @click="onClick">
+   <button
+      class="app-btn"
+      :type="type"
+      :class="{ sm: variant === 'sm' }"
+      @click="onClick"
+   >
       {{ text }}
    </button>
 </template>
@@ -11,8 +16,18 @@ export default {
          type: String,
          required: true,
       },
+      type: {
+         type: String,
+         required: false,
+         default: 'button',
+      },
       onClick: {
          type: Function,
+         required: false,
+      },
+      variant: {
+         type: String,
+         required: false,
       },
    },
 }
@@ -32,6 +47,11 @@ export default {
    letter-spacing: 1px;
 
    transition: background-color 0.4s ease;
+
+   &.sm {
+      padding: 7px 14px;
+      letter-spacing: 0;
+   }
 
    &:hover {
       background-color: #3644e0;

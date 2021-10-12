@@ -23,22 +23,37 @@
          <app-table />
       </div>
    </section>
+
+   <teleport to="body">
+      <form-modal v-if="isModalOpen" @on-close="closeFormModal" />
+   </teleport>
 </template>
 
 <script>
 import AppTable from '../components/AppTable.vue'
 import AppSelect from '../components/AppSelect.vue'
 import AppButton from '../ui/AppButton.vue'
+import FormModal from '../components/FormModal.vue'
 
 export default {
    components: {
       AppTable,
       AppSelect,
       AppButton,
+      FormModal,
+   },
+   data() {
+      return {
+         isModalOpen: false,
+      }
    },
    methods: {
       onEmployeeAdd() {
          console.log('adding emp')
+         this.isModalOpen = true
+      },
+      closeFormModal() {
+         this.isModalOpen = false
       },
       onSelect(value) {
          this.$store.commit('setSortValue', value)

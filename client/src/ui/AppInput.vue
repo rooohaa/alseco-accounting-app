@@ -37,13 +37,19 @@ export default {
 
 <style lang="scss" scoped>
 input {
+   width: 100%;
+
    border-radius: 7px;
    border: 1px solid #d9e2ef;
-   padding: 7px 14px;
+   padding: 10px 15px;
 
    color: #333;
    font-size: 14px;
    line-height: 17px;
+
+   &:focus {
+      border: 1px solid $main-color;
+   }
 
    &::placeholder {
       color: #abbcd5;

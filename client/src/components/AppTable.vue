@@ -24,7 +24,7 @@
 
       <teleport to="body">
          <confirmation-modal
-            v-show="isModalOpen"
+            v-if="isModalOpen"
             @on-delete="deleteEmployee"
             @on-close="closeModal"
          />

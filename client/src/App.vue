@@ -76,7 +76,7 @@ button {
    left: 0;
    right: 0;
    z-index: 20;
-   background-color: rgba(0, 0, 0, 0.5);
+   background-color: rgba(0, 0, 0, 0.6);
 
    display: flex;
    align-items: center;
