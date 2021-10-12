@@ -6,9 +6,12 @@
          </div>
       </div>
 
-      <div class="table-inner" v-if="tableData && tableData.length > 0">
+      <div
+         class="table-inner"
+         v-if="currentTableRows && currentTableRows.length > 0"
+      >
          <table-row
-            v-for="row in tableData"
+            v-for="row in currentTableRows"
             :key="String(row.id)"
             :id="String(row.id)"
             :name="row.name"
@@ -21,6 +24,8 @@
       <div class="message" v-else>
          <span>В ващей таблице пока нету сотрудников.</span>
       </div>
+
+      <pagination />
 
       <teleport to="body">
          <confirmation-modal
@@ -35,10 +40,11 @@
 <script>
 import TableRow from './TableRow.vue'
 import ConfirmationModal from './ConfirmationModal.vue'
+import Pagination from './Pagination.vue'
 import { constructTableData } from '../utils'
 
 export default {
-   components: { TableRow, ConfirmationModal },
+   components: { TableRow, ConfirmationModal, Pagination },
    data() {
       return {
          columns: [
@@ -66,8 +72,8 @@ export default {
       },
    },
    computed: {
-      tableData() {
-         return this.$store.getters.tableData
+      currentTableRows() {
+         return this.$store.getters.currentTableRows
       },
    },
 }

@@ -6,6 +6,8 @@ export default createStore({
       employees: [],
       items: [],
       sortByValue: '',
+      currentPage: 1,
+      rowsPerPage: 10,
    },
    mutations: {
       setEmployees(state, payload) {
@@ -28,6 +30,9 @@ export default createStore({
       setSortValue(state, payload) {
          state.sortByValue = payload
       },
+      setCurrentPage(state, payload) {
+         state.currentPage = payload
+      },
    },
    actions: {
       async getEmployees(context) {
@@ -38,7 +43,6 @@ export default createStore({
             context.commit('setEmployees', data)
          } catch (error) {}
       },
-
       async getMaterialItems(context) {
          try {
             const res = await fetch('http://localhost:8000/api/items')
@@ -47,7 +51,6 @@ export default createStore({
             context.commit('setItems', data)
          } catch (error) {}
       },
-
       async deleteEmployee(context, payload) {
          try {
             const res = await fetch(
@@ -70,7 +73,7 @@ export default createStore({
                headers: {
                   'Content-type': 'application/json',
                },
-            })``
+            })
             const data = await res.json()
 
             context.commit('addEmployee', data.employee)
@@ -92,6 +95,17 @@ export default createStore({
             default:
                return tableData
          }
+      },
+      currentTableRows(state, getters) {
+         const lastIndex = state.currentPage * state.rowsPerPage
+         const startIndex = lastIndex - state.rowsPerPage
+
+         const currentRows = getters.tableData.slice(startIndex, lastIndex)
+
+         return currentRows
+      },
+      currentTableRowsLength(state, getters) {
+         return getters.currentTableRows.length
       },
    },
 })
