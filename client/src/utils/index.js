@@ -39,6 +39,17 @@ export const constructTableData = (employees, items) => {
    return tableData
 }
 
+export const getEmployeeItemsData = (employee, items) => {
+   const employeeItems = []
+
+   for (let item of items) {
+      if (item.employee_id === employee.id) {
+         employeeItems.push(item)
+      }
+   }
+   return employeeItems
+}
+
 function calculateTotalPrice(arr) {
    let sum = 0
 
