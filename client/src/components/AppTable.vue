@@ -70,10 +70,6 @@ export default {
          return this.$store.getters.tableData
       },
    },
-   created() {
-      this.$store.dispatch('getEmployees')
-      this.$store.dispatch('getMaterialItems')
-   },
 }
 </script>
 

@@ -14,6 +14,10 @@ export default {
    components: {
       SideBar,
    },
+   created() {
+      this.$store.dispatch('getEmployees')
+      this.$store.dispatch('getMaterialItems')
+   },
 }
 </script>
 

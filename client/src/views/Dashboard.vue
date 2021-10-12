@@ -11,6 +11,8 @@
                      { value: 'кол-во МЦ', meta: 'itemCount' },
                      { value: 'Общ. стоимости', meta: 'totalPrice' },
                   ]"
+                  @on-select="onSelect"
+                  @on-reset="onReset"
                />
                <app-button
                   text="Добавить сотрудника"
@@ -37,6 +39,12 @@ export default {
    methods: {
       onEmployeeAdd() {
          console.log('adding emp')
+      },
+      onSelect(value) {
+         this.$store.commit('setSortValue', value)
+      },
+      onReset() {
+         this.$store.commit('setSortValue', '')
       },
    },
 }

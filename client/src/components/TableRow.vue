@@ -1,10 +1,17 @@
 <template>
-   <div class="table-row" @contextmenu="handler($event)">
-      <div class="item">{{ id }}</div>
-      <div class="item">{{ fullName }}</div>
-      <div class="item">{{ itemCount }}</div>
-      <div class="item">{{ totalPrice }}</div>
-
+   <div class="row-root">
+      <div
+         class="table-row"
+         :class="{ highlighted: isHighlighted }"
+         @contextmenu="handler($event)"
+         @click="highlight"
+         @dblclick="onDoubleClick(id)"
+      >
+         <div class="item">{{ id }}</div>
+         <div class="item">{{ fullName }}</div>
+         <div class="item">{{ itemCount }}</div>
+         <div class="item">{{ totalPrice }}</div>
+      </div>
       <div v-show="isMenuOpen" class="context-menu">
          <button class="del-btn" @click="deleteItem(id)">Удалить</button>
       </div>
@@ -38,6 +45,7 @@ export default {
    data() {
       return {
          isMenuOpen: false,
+         isHighlighted: false,
       }
    },
    methods: {
@@ -50,6 +58,12 @@ export default {
          this.$emit('on-delete', id)
          this.isMenuOpen = false
       },
+      highlight() {
+         this.isHighlighted = !this.isHighlighted
+      },
+      onDoubleClick(id) {
+         this.$router.push(`/employee-details/${id}`)
+      },
    },
    computed: {
       fullName() {
@@ -60,10 +74,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.row-root {
+   width: 100%;
+   position: relative;
+}
+
 .table-row {
    width: 100%;
-
-   position: relative;
 
    background-color: #fff;
    cursor: pointer;
@@ -76,6 +93,11 @@ export default {
    padding: 15px;
 
    border-bottom: 1px solid #f3f6f8;
+
+   &.highlighted {
+      background-color: #f9fbfd;
+      font-weight: bold;
+   }
 
    &:last-child {
       border-bottom: none;

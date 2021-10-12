@@ -54,7 +54,7 @@ export default {
          this.selectedValue = value
          this.isActive = false
 
-         this.$store.commit('setSortValue', meta)
+         this.$emit('on-select', meta)
       },
       closeSelect() {
          this.isActive = false
@@ -63,7 +63,7 @@ export default {
          this.isActive = false
          this.selectedValue = null
 
-         this.$store.commit('setSortValue', '')
+         this.$emit('on-reset')
       },
    },
 }
