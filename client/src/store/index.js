@@ -48,7 +48,7 @@ export default createStore({
    actions: {
       async getEmployees(context) {
          try {
-            const res = await fetch('http://localhost:8000/api/employees')
+            const res = await fetch(`${process.env.VUE_APP_API_URL}/employees`)
             const data = await res.json()
 
             context.commit('setEmployees', data)
@@ -56,7 +56,7 @@ export default createStore({
       },
       async getMaterialItems(context) {
          try {
-            const res = await fetch('http://localhost:8000/api/items')
+            const res = await fetch(`${process.env.VUE_APP_API_URL}/items`)
             const data = await res.json()
 
             context.commit('setItems', data)
@@ -65,7 +65,7 @@ export default createStore({
       async deleteEmployee(context, payload) {
          try {
             const res = await fetch(
-               `http://localhost:8000/api/employees/${payload}`,
+               `${process.env.VUE_APP_API_URL}/employees/${payload}`,
                {
                   method: 'DELETE',
                }
@@ -78,13 +78,16 @@ export default createStore({
       },
       async postNewEmployee(context, payload) {
          try {
-            const res = await fetch('http://localhost:8000/api/employees', {
-               method: 'POST',
-               body: JSON.stringify(payload),
-               headers: {
-                  'Content-type': 'application/json',
-               },
-            })
+            const res = await fetch(
+               `${process.env.VUE_APP_API_URL}/employees`,
+               {
+                  method: 'POST',
+                  body: JSON.stringify(payload),
+                  headers: {
+                     'Content-type': 'application/json',
+                  },
+               }
+            )
             const data = await res.json()
 
             context.commit('addEmployee', data.employee)
@@ -93,7 +96,7 @@ export default createStore({
       },
       async addNewItem(context, payload) {
          try {
-            const res = await fetch('http://localhost:8000/api/items', {
+            const res = await fetch(`${process.env.VUE_APP_API_URL}/items`, {
                method: 'POST',
                body: JSON.stringify(payload),
                headers: {
@@ -109,7 +112,7 @@ export default createStore({
       async updateItem(context, payload) {
          try {
             const res = await fetch(
-               `http://localhost:8000/api/items/${payload.id}`,
+               `${process.env.VUE_APP_API_URL}/items/${payload.id}`,
                {
                   method: 'PUT',
                   body: JSON.stringify(payload),
@@ -127,7 +130,7 @@ export default createStore({
       async deleteItem(context, payload) {
          try {
             const res = await fetch(
-               `http://localhost:8000/api/items/${payload}`,
+               `${process.env.VUE_APP_API_URL}/items/${payload}`,
                {
                   method: 'DELETE',
                }

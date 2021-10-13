@@ -11,11 +11,11 @@
 
 1. Переходим в папку server: `cd server`
 2. Устанавливаем зависимости: `npm install`
-3. Создаем .env файл в корне проекта с нужными значениями
+3. Создаем .env файл в корне папки server с нужными значениями
 
 ```
 PORT=8000  ->  Порт на котором будет запускаться сервер
-PGUSER=rakhat  ->  Логин юзера базы данных PostgreSQL
+PGUSER=rakhat  ->  Логин юзера базы данных PostgreSQL (введите свой)
 PGHOST=localhost  ->  SQL хост - по умолчанию localhost
 PGDATABASE=alsecodb  ->  Название базы данных (нужно создать)
 PGPORT=5432  ->  Порт на котором будет запускаться база
@@ -25,6 +25,8 @@ PGPORT=5432  ->  Порт на котором будет запускаться 
 
 ```
 CREATE DATABASE alsecodb;
+
+\c alsecodb    ->    Подключаемся к созданной базе
 
 CREATE TABLE employees (
    id SERIAL PRIMARY KEY,
@@ -56,7 +58,13 @@ INSERT INTO material_items (title, price, employee_id) VALUES ('Macbook M1 Air',
 
 1. Переходим в папку client: `cd client`
 2. Устанавливаем зависимости: `npm install`
-3. Запускаем приложение через скрипт: `npm run serve`
+3. Создаем .env файл в корне папки client с нужным значением
+
+```
+VUE_APP_API_URL=http://localhost:8000/api   ->   URL на котором запускается сервер
+```
+
+4. Запускаем приложение через скрипт: `npm run serve`
 
 ##### Скриншоты работающего приложения:
 
