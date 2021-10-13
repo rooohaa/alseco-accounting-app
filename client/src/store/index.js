@@ -30,6 +30,11 @@ export default createStore({
       setItems(state, payload) {
          state.items = payload
       },
+      updateItem(state, payload) {
+         const idx = state.items.findIndex((item) => item.id === payload.id)
+
+         state.items[idx] = payload
+      },
       mergeItems(state, payload) {
          state.items = [...state.items, ...payload]
       },
@@ -99,6 +104,24 @@ export default createStore({
             const data = await res.json()
 
             context.commit('addItem', data)
+         } catch (error) {}
+      },
+      async updateItem(context, payload) {
+         try {
+            const res = await fetch(
+               `http://localhost:8000/api/items/${payload.id}`,
+               {
+                  method: 'PUT',
+                  body: JSON.stringify(payload),
+                  headers: {
+                     'Content-type': 'application/json',
+                  },
+               }
+            )
+
+            const data = await res.json()
+
+            context.commit('updateItem', data)
          } catch (error) {}
       },
       async deleteItem(context, payload) {

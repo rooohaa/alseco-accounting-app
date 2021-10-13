@@ -37,6 +37,9 @@
             :items="employeeItems"
             @on-edit="editItem"
          />
+         <div class="no-items" v-else>
+            У этого сотрудника нету выданных МЦ.
+         </div>
       </div>
    </section>
 </template>
@@ -79,7 +82,12 @@ export default {
          this.$store.dispatch('addNewItem', data)
       },
       onItemUpdate(edittedItem) {
-         console.log('Editting', edittedItem)
+         const data = {
+            id: this.edittingItem.id,
+            ...edittedItem,
+         }
+
+         this.$store.dispatch('updateItem', data)
 
          this.formMode = 'add'
       },
@@ -153,5 +161,12 @@ export default {
    color: $main-color;
    font-size: 14px;
    font-weight: bold;
+}
+
+.no-items {
+   font-size: 15px;
+   font-weight: bold;
+   color: #333;
+   text-decoration: underline;
 }
 </style>

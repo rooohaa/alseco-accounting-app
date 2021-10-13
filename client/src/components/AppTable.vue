@@ -75,6 +75,16 @@ export default {
       currentTableRows() {
          return this.$store.getters.currentTableRows
       },
+      currentTablePage() {
+         return this.$store.state.currentPage
+      },
+   },
+   watch: {
+      currentTableRows(newValue) {
+         if (newValue.length === 0 && this.currentTablePage > 1) {
+            this.$store.commit('setCurrentPage', this.currentTablePage - 1)
+         }
+      },
    },
 }
 </script>

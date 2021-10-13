@@ -4,7 +4,7 @@
          <button class="exit-btn" @click="closeModal">&times;</button>
          <h3>Добавление сотрудника</h3>
 
-         <form @submit.prevent="submitForm">
+         <form @submit.prevent>
             <div class="form-control">
                <app-input
                   inputType="text"
@@ -33,7 +33,11 @@
                >
                   {{ formBtnText }}
                </button>
-               <items-form v-if="itemsFormActive" @on-add="addItem" />
+               <items-form
+                  v-if="itemsFormActive"
+                  @on-add="addItem"
+                  mode="add"
+               />
             </div>
 
             <div class="items-list" v-if="items.length > 0">
@@ -54,7 +58,12 @@
             </div>
 
             <div class="actions">
-               <app-button text="Добавить" type="submit" variant="sm" />
+               <app-button
+                  text="Добавить"
+                  :onClick="submitForm"
+                  type="button"
+                  variant="sm"
+               />
                <button type="button" @click="closeModal" class="close-btn">
                   Закрыть
                </button>
@@ -141,6 +150,9 @@ export default {
 .form-modal {
    width: 450px;
    padding: 25px;
+   min-height: 250px;
+   max-height: calc(100vh - 10%);
+   overflow-y: auto;
 
    position: relative;
    animation: popUp 0.4s ease-out;

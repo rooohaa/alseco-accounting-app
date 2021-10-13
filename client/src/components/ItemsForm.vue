@@ -30,10 +30,12 @@ export default {
       defaultName: {
          type: String,
          required: false,
+         default: '',
       },
       defaultPrice: {
          type: [Number, String],
          required: false,
+         default: '',
       },
       mode: {
          type: String,

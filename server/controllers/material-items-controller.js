@@ -38,8 +38,24 @@ const deleteItem = async (req, res) => {
    }
 }
 
+const updateItem = async (req, res) => {
+   const { id } = req.params
+   const { title, price } = req.body
+
+   try {
+      const result = await db.query(
+         'UPDATE material_items SET title = $1, price = $2 WHERE id = $3 RETURNING *;',
+         [title, price, id]
+      )
+      res.status(200).json(result.rows[0])
+   } catch (e) {
+      console.log('Error ocurred: ', e)
+   }
+}
+
 module.exports = {
    getMaterialItems,
    postItem,
    deleteItem,
+   updateItem,
 }
